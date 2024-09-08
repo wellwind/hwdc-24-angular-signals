@@ -28,6 +28,11 @@ export const menuLinks: MenuLinks = [
     loadComponent: () => import('./demo/demo-03-lazy-signal.component'),
   },
   {
+    path: 'output-from-observable',
+    title: 'outputFromObservable',
+    loadComponent: () => import('./demo/demo-04-output-from-observable.component'),
+  },
+  {
     path: '',
     redirectTo: 'quick-start-signal',
     pathMatch: 'full',
