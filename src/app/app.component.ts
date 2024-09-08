@@ -31,7 +31,7 @@ import { menuLinks } from './menu-links';
       <button mat-icon-button (click)="menuOpened.set(!menuOpened())">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Angular Router</span>
+      <span>Angular Signals Demo</span>
     </mat-toolbar>
 
     <mat-sidenav-container>

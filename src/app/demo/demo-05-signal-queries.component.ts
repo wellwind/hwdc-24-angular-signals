@@ -92,7 +92,7 @@ export class TodoItemComponent {
   `,
   styles: `
     button {
-      margin: 0 10px;
+      margin: 0 5px;
     }
 
     .mat-primary {
