@@ -8,13 +8,18 @@ export type MenuLinks = Array<MenuLink>;
 
 export const menuLinks: MenuLinks = [
   {
-    path: 'quick-start',
-    title: 'Quick Start',
-    loadComponent: () => import('./demo/demo-01-quick-start.component'),
+    path: 'quick-start-rxjs',
+    title: 'Quick Start (RxJS)',
+    loadComponent: () => import('./demo/demo-01-quick-start-rxjs.component'),
+  },
+  {
+    path: 'quick-start-signal',
+    title: 'Quick Start (Signal)',
+    loadComponent: () => import('./demo/demo-01-quick-start-signal.component'),
   },
   {
     path: '',
-    redirectTo: 'quick-start',
+    redirectTo: 'quick-start-signal',
     pathMatch: 'full',
   },
 ];
