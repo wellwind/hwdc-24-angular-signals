@@ -153,7 +153,7 @@ export default class Demo01QuickStartRxJSComponent {
   protected sortBy$ = new BehaviorSubject<string>('stars');
   protected sortOrder$ = new BehaviorSubject<'asc' | 'desc'>('desc');
 
-  private searchSubject$ = combineLatest({
+  private searchCondition$ = combineLatest({
     keyword: this.keyword$,
     currentPage: this.currentPage$,
     itemsPerPage: this.itemsPerPage$,
@@ -170,7 +170,7 @@ export default class Demo01QuickStartRxJSComponent {
     }))
   );
 
-  protected result$ = this.searchSubject$.pipe(
+  protected result$ = this.searchCondition$.pipe(
     debounceTime(300),
     distinctUntilChanged(),
     tap(() => this.loading$.next(true)),
