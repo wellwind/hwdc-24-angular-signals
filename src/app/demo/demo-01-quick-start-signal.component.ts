@@ -180,7 +180,6 @@ export default class Demo01QuickStartSignalComponent {
       map(() => false),
       startWith(true)
     )),
-    tap((l) => console.log(l))
   );
   protected loading = toSignal(
     this.loading$,

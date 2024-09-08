@@ -33,6 +33,11 @@ export const menuLinks: MenuLinks = [
     loadComponent: () => import('./demo/demo-04-output-from-observable.component'),
   },
   {
+    path: 'signal-queries',
+    title: 'Signal Queries',
+    loadComponent: () => import('./demo/demo-05-signal-queries.component'),
+  },
+  {
     path: '',
     redirectTo: 'quick-start-signal',
     pathMatch: 'full',
