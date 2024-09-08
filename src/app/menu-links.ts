@@ -23,6 +23,11 @@ export const menuLinks: MenuLinks = [
     loadComponent: () => import('./demo/demo-02-untracked.component'),
   },
   {
+    path: 'lazy-signal',
+    title: 'Lazy Signal',
+    loadComponent: () => import('./demo/demo-03-lazy-signal.component'),
+  },
+  {
     path: '',
     redirectTo: 'quick-start-signal',
     pathMatch: 'full',
