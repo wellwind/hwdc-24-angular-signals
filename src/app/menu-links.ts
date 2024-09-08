@@ -18,6 +18,11 @@ export const menuLinks: MenuLinks = [
     loadComponent: () => import('./demo/demo-01-quick-start-signal.component'),
   },
   {
+    path: 'signal-untracked',
+    title: 'untracked',
+    loadComponent: () => import('./demo/demo-02-untracked.component'),
+  },
+  {
     path: '',
     redirectTo: 'quick-start-signal',
     pathMatch: 'full',
