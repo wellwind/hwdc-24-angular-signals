@@ -11,10 +11,19 @@ import {
   MatHeaderCellDef,
   MatHeaderRowDef,
   MatRowDef,
-  MatTableModule
+  MatTableModule,
 } from '@angular/material/table';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  of,
+  shareReplay,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { GitHubService } from './github.service';
 
 @Component({
@@ -45,11 +54,19 @@ import { GitHubService } from './github.service';
         [disabled]="loading$ | async"
       />
     </mat-form-field>
-    <div class="progress-bar-container" [style.visibility]="(loading$ | async) ? 'visible' : 'hidden'">
+    <div
+      class="progress-bar-container"
+      [style.visibility]="(loading$ | async) ? 'visible' : 'hidden'"
+    >
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     <div class="table-container">
-      <table mat-table [dataSource]="(result$ | async)?.items ?? []" matSort (matSortChange)="sortData($event)">
+      <table
+        mat-table
+        [dataSource]="(result$ | async)?.items ?? []"
+        matSort
+        (matSortChange)="sortData($event)"
+      >
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>名稱</th>
@@ -64,7 +81,14 @@ import { GitHubService } from './github.service';
 
         <!-- Stars Column -->
         <ng-container matColumnDef="stars">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="loading$ | async">⭐️</th>
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [disabled]="loading$ | async"
+          >
+            ⭐️
+          </th>
           <td mat-cell *matCellDef="let repo">{{ repo.stargazers_count }}</td>
         </ng-container>
 
@@ -82,7 +106,9 @@ import { GitHubService } from './github.service';
     <div class="pagination-container">
       <button
         mat-raised-button
-        [disabled]="(currentPage$ | async) === (firstPage$ | async) || (loading$ | async)"
+        [disabled]="
+          (currentPage$ | async) === (firstPage$ | async) || (loading$ | async)
+        "
         (click)="setCurrentPage(1)"
       >
         第一頁
@@ -115,7 +141,9 @@ import { GitHubService } from './github.service';
       @let lastPage = (lastPage$ | async) ?? 0;
       <button
         mat-raised-button
-        [disabled]="(currentPage$ | async) === (lastPage$ | async) || (loading$ | async)"
+        [disabled]="
+          (currentPage$ | async) === (lastPage$ | async) || (loading$ | async)
+        "
         (click)="setCurrentPage(lastPage)"
       >
         最後一頁
@@ -158,7 +186,7 @@ export default class Demo01QuickStartRxJSComponent {
     currentPage: this.currentPage$,
     itemsPerPage: this.itemsPerPage$,
     sortBy: this.sortBy$,
-    sortOrder: this.sortOrder$
+    sortOrder: this.sortOrder$,
   }).pipe(
     distinctUntilChanged(),
     map(({ keyword, currentPage, itemsPerPage, sortBy, sortOrder }) => ({
@@ -166,8 +194,8 @@ export default class Demo01QuickStartRxJSComponent {
       page: currentPage.toString(),
       per_page: itemsPerPage.toString(),
       sort: sortBy,
-      order: sortOrder
-    }))
+      order: sortOrder,
+    })),
   );
 
   protected result$ = this.searchCondition$.pipe(
@@ -176,32 +204,32 @@ export default class Demo01QuickStartRxJSComponent {
     tap(() => this.loading$.next(true)),
     switchMap((condition) => this.gitHubService.searchRepos(condition)),
     tap(() => this.loading$.next(false)),
-    shareReplay(1)
-  )
+    shareReplay(1),
+  );
 
   protected previousPage$ = combineLatest({
     currentPage: this.currentPage$,
-    result: this.result$
-  }).pipe(
-    map(({ currentPage }) => currentPage > 1 ? currentPage - 1 : 1)
-  );
+    result: this.result$,
+  }).pipe(map(({ currentPage }) => (currentPage > 1 ? currentPage - 1 : 1)));
 
   protected nextPage$ = combineLatest({
     currentPage: this.currentPage$,
     result: this.result$,
-    itemsPerPage: this.itemsPerPage$
+    itemsPerPage: this.itemsPerPage$,
   }).pipe(
     map(({ currentPage, result, itemsPerPage }) => {
       const totalPages = Math.ceil((result?.total_count ?? 0) / itemsPerPage);
       return currentPage < totalPages ? currentPage + 1 : totalPages;
-    })
+    }),
   );
 
   protected lastPage$ = combineLatest({
     result: this.result$,
-    itemsPerPage: this.itemsPerPage$
+    itemsPerPage: this.itemsPerPage$,
   }).pipe(
-    map(({ result, itemsPerPage }) => Math.ceil((result?.total_count ?? 0) / itemsPerPage))
+    map(({ result, itemsPerPage }) =>
+      Math.ceil((result?.total_count ?? 0) / itemsPerPage),
+    ),
   );
 
   protected firstPage$ = of(1);

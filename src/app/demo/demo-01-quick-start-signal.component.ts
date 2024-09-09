@@ -13,7 +13,13 @@ import {
   MatRowDef,
   MatTableModule,
 } from '@angular/material/table';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { GitHubService } from './github.service';
 
 @Component({
@@ -43,11 +49,19 @@ import { GitHubService } from './github.service';
         [disabled]="loading()"
       />
     </mat-form-field>
-    <div class="progress-bar-container" [style.visibility]="loading() ? 'visible' : 'hidden'">
+    <div
+      class="progress-bar-container"
+      [style.visibility]="loading() ? 'visible' : 'hidden'"
+    >
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     <div class="table-container">
-      <table mat-table [dataSource]="result()?.items ?? []" matSort (matSortChange)="sortData($event)">
+      <table
+        mat-table
+        [dataSource]="result()?.items ?? []"
+        matSort
+        (matSortChange)="sortData($event)"
+      >
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>名稱</th>
@@ -62,7 +76,14 @@ import { GitHubService } from './github.service';
 
         <!-- Stars Column -->
         <ng-container matColumnDef="stars">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="loading()">⭐️</th>
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [disabled]="loading()"
+          >
+            ⭐️
+          </th>
           <td mat-cell *matCellDef="let repo">{{ repo.stargazers_count }}</td>
         </ng-container>
 
@@ -176,15 +197,14 @@ export default class Demo01QuickStartSignalComponent {
   // }, { allowSignalWrites: true });
 
   private loading$ = this.searchCondition$.pipe(
-    switchMap(() => this.result$.pipe(
-      map(() => false),
-      startWith(true)
-    )),
+    switchMap(() =>
+      this.result$.pipe(
+        map(() => false),
+        startWith(true),
+      ),
+    ),
   );
-  protected loading = toSignal(
-    this.loading$,
-    { initialValue: false }
-  );
+  protected loading = toSignal(this.loading$, { initialValue: false });
 
   protected previousPage = computed(() => {
     return this.currentPage() > 1 ? this.currentPage() - 1 : 1;
